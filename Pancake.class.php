@@ -168,7 +168,33 @@ Class Pancake
     $dbh = $this->session;
 
     $stmt = $dbh->prepare($q);
-
     $stmt->execute();
+  }
+
+
+  /**
+    * Selects all fields from a single row in the table,
+    * based on provided condition.
+    * If multiple results are found, will return the first of the set.
+    *
+    * @param string $table
+    * Table to delete the entry from.
+    *
+    * @return array
+    * An associative array with keys matching the column names.
+    *
+  */
+  public function getRow( $table, $where )
+  {
+    $conditions = $this->getConditions( $where );
+
+    $q = "SELECT * FROM $table WHERE $conditions";
+
+    $dbh = $this->session;
+
+    $stmt = $dbh->prepare($q);
+    $stmt->execute();
+
+    return $stmt->fetch( PDO::FETCH_ASSOC );
   }
 }
