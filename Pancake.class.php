@@ -134,7 +134,7 @@ Class Pancake
 
     error_log($q);
 
-    $dbh = $this->newSession();
+    $dbh = $this->session;
 
     $stmt = $dbh->prepare($q);
     $stmt->execute( array_values($data) );
@@ -165,7 +165,7 @@ Class Pancake
 
     $q = "DELETE FROM $table WHERE $conditions";
 
-    $dbh = $this->newSession();
+    $dbh = $this->session;
 
     $stmt = $dbh->prepare($q);
 
