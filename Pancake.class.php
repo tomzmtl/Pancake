@@ -43,6 +43,15 @@ Class Pancake
   }
 
 
+
+
+
+  /*--------------------------------------------------+
+  |                                                   |
+  |                UTILITY FUNCTIONS                  |
+  |                                                   |
+  +--------------------------------------------------*/
+
   /**
     * Converts an array of data to process into a SQL-readable
     * string. ex: "(key1,ke2,key3)"
@@ -101,6 +110,15 @@ Class Pancake
     return implode( " AND " , $conditions );
   }
 
+
+
+
+
+  /*--------------------------------------------------+
+  |                                                   |
+  |                 PUBLIC METHODS                    |
+  |                                                   |
+  +--------------------------------------------------*/
 
   /**
     * Insert a new entry in the DB. Takes as argument a data array
