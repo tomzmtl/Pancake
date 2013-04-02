@@ -27,20 +27,10 @@ Class Pancake
     $this->db_pass = $pass;
     $this->db_host = $host;
 
-    $this->session = "mysql:host=$this->db_host;dbname=$this->db_name";
+    $this->session = new PDO( "mysql:host=$this->db_host;dbname=$this->db_name",
+                              $this->db_user, $this->db_pass );
   }
 
-  /**
-    * Creates a new PDO session.
-    *
-    * @return object
-    * The PHP PDO object created.
-    *
-  */
-  private function newSession()
-  {
-    return new PDO( $this->session, $this->db_user, $this->db_pass);
-  }
 
 
 
