@@ -18,8 +18,6 @@ Class Pancake
   private $db_pass = NULL;
   private $db_host = NULL;
 
-  private $session = NULL;
-
   function __construct( $name, $user, $pass, $host = "localhost" )
   {
     $this->db_name = $name;
