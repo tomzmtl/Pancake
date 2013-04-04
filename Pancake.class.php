@@ -26,8 +26,11 @@ Class Pancake
     $this->db_user = $user;
     $this->db_pass = $pass;
     $this->db_host = $host;
+  }
 
-    $this->session = new PDO( "mysql:host=$this->db_host;dbname=$this->db_name",
+  function createSession()
+  {
+    return new PDO( "mysql:host=$this->db_host;dbname=$this->db_name",
                               $this->db_user, $this->db_pass );
   }
 
@@ -133,8 +136,8 @@ Class Pancake
     $q = "INSERT INTO $table ($keys) VALUES ($placeholders)";
 
     error_log($q);
+    $dbh = $this->createSession();
 
-    $dbh = $this->session;
 
     $stmt = $dbh->prepare($q);
     $stmt->execute( array_values($data) );
@@ -165,7 +168,7 @@ Class Pancake
 
     $q = "DELETE FROM $table WHERE $conditions";
 
-    $dbh = $this->session;
+    $dbh = $this->createSession();
 
     $stmt = $dbh->prepare($q);
     $stmt->execute();
@@ -190,7 +193,7 @@ Class Pancake
 
     $q = "SELECT * FROM $table WHERE $conditions";
 
-    $dbh = $this->session;
+    $dbh = $this->createSession();
 
     $stmt = $dbh->prepare($q);
     $stmt->execute();
