@@ -1,13 +1,17 @@
 <?php
 
-/*
-
-  PANCAKE
-  --------------------
-
-  A PDO-based MySQL Abstraction class.
-  Inspired by the simplicity of EzSQL & Wordpress' WPDB.
-
+/**
+  * PANCAKE
+  * ------------------------------------------------------------
+  *
+  * A PDO-based MySQL Abstraction class.
+  * Inspired by the simplicity of EzSQL & Wordpress' WPDB.
+  *
+  * ------------------------------------------------------------
+  *
+  * @author Thomas Andreo
+  * @version 0.3
+  *
 */
 
 
@@ -18,6 +22,22 @@ Class Pancake
   private $db_pass = NULL;
   private $db_host = NULL;
 
+  /**
+    * Class constructor.
+    *
+    * @param string $name
+    * Database Name.
+    *
+    * @param string $user
+    * Database User name.
+    *
+    * @param string $pass
+    * Database Password.
+    *
+    * @param string [optional] $host
+    * Database Host. Default to "localhost".
+    *
+  */
   function __construct( $name, $user, $pass, $host = "localhost" )
   {
     $this->db_name = $name;
@@ -26,6 +46,14 @@ Class Pancake
     $this->db_host = $host;
   }
 
+  /**
+    * Creates a brand new PDO session.
+    * Should be used before any new DB operation.
+    *
+    * @return object
+    * PHP PDO Object
+    *
+  */
   function createSession()
   {
     return new PDO( "mysql:host=$this->db_host;dbname=$this->db_name",
@@ -45,7 +73,7 @@ Class Pancake
 
   /**
     * Converts an array of data to process into a SQL-readable
-    * string. ex: "(key1,ke2,key3)"
+    * string. ex: "key1,ke2,key3"
     *
     * @param  array
     * @return string
@@ -59,7 +87,7 @@ Class Pancake
 
   /**
     * Converts an array of data to process into a PDO-compatible
-    * placeholders string. ex: "(?,?,?)"
+    * placeholders string. ex: "?,?,?"
     *
     * @param  array
     * @return string
@@ -156,9 +184,9 @@ Class Pancake
     * Table to delete the entry from.
     *
     * @param array $where
-    * An array-based single condition to target the item(s) to delete.
-    * Exemple : array( 'id' => 23 ) equals to the query WHERE id = 234.
+    * A set of conditions to select the data to delete.
     *
+    * @todo
     * @return mixed
     * Number of deleted entries (int) if the query didn't fail.
     * FALSE if a problem occured.
@@ -186,7 +214,10 @@ Class Pancake
     * If multiple results are found, will return the first of the set.
     *
     * @param string $table
-    * Table to delete the entry from.
+    * Table to get the data from.
+    *
+    * @param array $where
+    * A set of conditions to select the data to return.
     *
     * @return array
     * An associative array with keys matching the column names.
