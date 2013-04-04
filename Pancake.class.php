@@ -135,12 +135,19 @@ Class Pancake
 
     $q = "INSERT INTO $table ($keys) VALUES ($placeholders)";
 
-    error_log($q);
     $dbh = $this->createSession();
 
 
     $stmt = $dbh->prepare($q);
-    $stmt->execute( array_values($data) );
+
+    if ( $stmt->execute( array_values($data) ))
+    {
+      return (int) $dbh->lastInsertId();
+    }
+    else
+    {
+      return FALSE;
+    }
   }
 
 
