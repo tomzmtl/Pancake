@@ -94,7 +94,7 @@ Like `delete()`, the `fetchRow()` method use a single/multiple conditions array.
 
 The data will be returned as an associative array, with key names matching the table's column names.
 
-**Note : ** This method only fetch **a single row**. If your condition(s) match several rows, only the first one will be returned.
+**Note : ** This method only fetch a single row. If your condition(s) match several rows, only the first one will be returned.
 
 ```php
 <?php
