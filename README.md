@@ -90,7 +90,7 @@ To use multiple conditions, use a multiple-rows array :
 
 ### Fetch a row's data
 
-Like `delete()`, the `fetchRow()` method use a single/multiple conditions array.
+Like `delete()`, the `getRow()` method use a single/multiple conditions array.
 
 The data will be returned as an associative array, with key names matching the table's column names.
 
@@ -103,7 +103,7 @@ The data will be returned as an associative array, with key names matching the t
     'id' => 48
   );
 
-  $results = $pancake->fetchRow( "users", $where );
+  $results = $pancake->getRow( "users", $where );
 
 ?>
 ```

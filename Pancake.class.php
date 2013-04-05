@@ -223,7 +223,7 @@ Class Pancake
     * An associative array with keys matching the column names.
     *
   */
-  public function fetchRow( $table, $where )
+  public function getRow( $table, $where )
   {
     $conditions = $this->getConditions( $where );
 
