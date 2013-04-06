@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.3
+  * @version 0.4
   *
 */
 
@@ -186,13 +186,12 @@ Class Pancake
     * @param array $where
     * A set of conditions to select the data to delete.
     *
-    * @todo
     * @return mixed
     * Number of deleted entries (int) if the query didn't fail.
     * FALSE if a problem occured.
     *
-    * Note : this method can return 0 (int), so be careful when
-    * processing the output.
+    * Note : this method can return 0 (int), if no error occured
+    *        but no row was deleted.
     *
   */
   public function delete( $table, $where )
@@ -204,7 +203,15 @@ Class Pancake
     $dbh = $this->createSession();
 
     $stmt = $dbh->prepare($q);
-    $stmt->execute();
+    
+    if ( $stmt->execute() === TRUE )
+    {
+      return $dbh->rowCount();
+    }
+    else
+    {
+      return FALSE;
+    }
   }
 
 
