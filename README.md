@@ -1,14 +1,14 @@
-Pancake
-=======
+# Pancake
 
-Current version : **0.4**
+Current version : __0.5__
 
 A simple PDO-based MySQL abstraction class.
 
 Inspired by the simplicity of ezSQL and WordPress DB Class.
 
-Getting Started
----------------
+
+
+## Getting Started
 
 To start using Pancake, simply instantiate the class.
 You'll have to provide your database credentials.
@@ -23,12 +23,29 @@ You'll have to provide your database credentials.
 ?>
 ```
 
-Pancake Methods
----------------
+
+
+## Pancake Methods
 
 Here are listed all methods provided by Pancake.
 
-### Insert rows
+
+
+### insert( $table, $data )
+
+Insert a single row into a table.
+
+#### Parameters
+
+`string` $table : Table to insert the data into.
+`array` $data : Set of key/value pairs. Keys must match the table's columns names.
+
+#### Return values
+
+`int` Insert ID if insert is successful.
+`bool(FALSE)` on failure.
+
+#### Usage
 
 Provide an array with key/value pairs matching your table's column names.
 
@@ -49,11 +66,23 @@ Provide an array with key/value pairs matching your table's column names.
 ?>
 ```
 
-**Note :** This method can only insert a single row.
 
-The `insert()` method will return the new insert's ID, or `FALSE`if an error occured.
 
-### Delete rows
+### delete( $table, $where)
+
+Delete rows from a table.
+
+#### Parameters
+
+`string` $table : Table to delete the entry from.
+`array` $where : A set of conditions to select the data to delete.
+
+#### Return values
+
+* `int` Number of deleted entries.
+* `bool(FALSE)` if a problem occured.
+
+#### Usage
 
 Provide a set of conditions matching the entries to delete.
 
@@ -88,15 +117,30 @@ To use multiple conditions, use a multiple-rows array :
 ?>
 ```
 
-**Note :** As of version `0.3`, multiple conditions only support `AND` logical relations.
+__Note :__ As of version `0.3`, multiple conditions only support `AND` logical relations.
 
-### Fetch a row's data
+
+
+### getRow( $table, $where )
+
+Fetch a single row's data.
+
+#### Parameters
+
+`string` $table : Table to get the data from.
+`array` $where : A set of conditions to select the data to return.
+
+#### Return values
+
+* `array` An associative array with key names matching the table's column names.
+* `int(0)` if the query returned an empty result.
+* `bool(FALSE)` if the query failed.
+
+#### Usage
 
 Like `delete()`, the `getRow()` method use a single/multiple conditions array.
 
-The data will be returned as an associative array, with key names matching the table's column names.
-
-**Note : ** This method only fetch a single row. If your condition(s) match several rows, only the first one will be returned.
+__Note : __ : If your condition(s) match several rows, only the first one will be returned.
 
 ```php
 <?php
@@ -110,4 +154,4 @@ The data will be returned as an associative array, with key names matching the t
 ?>
 ```
 
-**Note :** As of version `0.3`, multiple conditions only support `AND` logical relations.
+__Note :__ As of version `0.3`, multiple conditions only support `AND` logical relations.
