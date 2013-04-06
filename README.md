@@ -35,17 +35,20 @@ Here are listed all methods provided by Pancake.
 
 Insert a single row into a table.
 
-#### Parameters
 
-`string` $table : Table to insert the data into.
-`array` $data : Set of key/value pairs. Keys must match the table's columns names.
+##### Parameters
 
-#### Return values
+  * `string` $table : Table to insert the data into.
+  * `array` $data : Set of key/value pairs. Keys must match the table's columns names.
 
-`int` Insert ID if insert is successful.
-`bool(FALSE)` on failure.
 
-#### Usage
+##### Return values
+
+  * `int` Insert ID if insert is successful.
+  * `bool(FALSE)` on failure.
+
+
+##### Usage
 
 Provide an array with key/value pairs matching your table's column names.
 
@@ -72,17 +75,20 @@ Provide an array with key/value pairs matching your table's column names.
 
 Delete rows from a table.
 
-#### Parameters
 
-`string` $table : Table to delete the entry from.
-`array` $where : A set of conditions to select the data to delete.
+##### Parameters
 
-#### Return values
+  * `string` $table : Table to delete the entry from.
+  * `array` $where : A set of conditions to select the data to delete.
 
-* `int` Number of deleted entries.
-* `bool(FALSE)` if a problem occured.
 
-#### Usage
+##### Return values
+
+  * `int` Number of deleted entries.
+  * `bool(FALSE)` if a problem occured.
+
+
+##### Usage
 
 Provide a set of conditions matching the entries to delete.
 
@@ -125,18 +131,21 @@ __Note :__ As of version `0.3`, multiple conditions only support `AND` logical r
 
 Fetch a single row's data.
 
-#### Parameters
 
-`string` $table : Table to get the data from.
-`array` $where : A set of conditions to select the data to return.
+##### Parameters
 
-#### Return values
+  * `string` $table : Table to get the data from.
+  * `array` $where : A set of conditions to select the data to return.
 
-* `array` An associative array with key names matching the table's column names.
-* `int(0)` if the query returned an empty result.
-* `bool(FALSE)` if the query failed.
 
-#### Usage
+##### Return values
+
+  * `array` An associative array with key names matching the table's column names.
+  * `int(0)` if the query returned an empty result.
+  * `bool(FALSE)` if the query failed.
+
+
+##### Usage
 
 Like `delete()`, the `getRow()` method use a single/multiple conditions array.
 
