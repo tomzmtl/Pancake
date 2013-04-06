@@ -1,7 +1,7 @@
 Pancake
 =======
 
-Current version : **0.3**
+Current version : **0.4**
 
 A simple PDO-based MySQL abstraction class.
 
