@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.4
+  * @version 0.5
   *
 */
 
@@ -226,21 +226,39 @@ Class Pancake
     * @param array $where
     * A set of conditions to select the data to return.
     *
-    * @return array
-    * An associative array with keys matching the column names.
+    * @return mixed
+    * array : On success, an associative array with keys matching the column names.
+    * int   : If the query succeed but get an empty result, (int) 0.
+    * bool  : On query failure, FALSE.
     *
   */
   public function getRow( $table, $where )
   {
     $conditions = $this->getConditions( $where );
 
-    $q = "SELECT * FROM $table WHERE $conditions";
+    $q = "SELECT * FROM $table WHERE $conditions LIMIT 0,1";
 
     $dbh = $this->createSession();
 
     $stmt = $dbh->prepare($q);
-    $stmt->execute();
 
-    return $stmt->fetch( PDO::FETCH_ASSOC );
+    if ( $stmt->execute() )
+    {
+      $result = $stmt->fetch( PDO::FETCH_ASSOC );
+
+      if ( is_array( $result ) )
+      {
+        return $result;
+      }
+      else
+      {
+        return 0;
+      }
+    }
+    else
+    {
+      error_code( $stmt->errorCode() );
+      return FALSE;
+    }
   }
 }
