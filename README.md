@@ -40,7 +40,7 @@ Provide an array with key/value pairs matching your table's column names.
     'first_name' => "Brendan",
     'last_name'  => "Gallagher",
     'age'        => 20,
-    'number'     => 11
+    'country'    => "Canada"
   );
 
   // execute insertion on the users table
@@ -48,6 +48,8 @@ Provide an array with key/value pairs matching your table's column names.
 
 ?>
 ```
+
+**Note :** This method can only insert a single row.
 
 The `insert()` method will return the new insert's ID, or `FALSE`if an error occured.
 
