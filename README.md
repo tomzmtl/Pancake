@@ -1,6 +1,6 @@
 # Pancake
 
-Current version : __0.5__
+Current version : __0.6__
 
 A simple PDO-based MySQL abstraction class.
 
@@ -33,7 +33,7 @@ Here are listed all methods provided by Pancake.
 
 ### insert( $table, $data )
 
-Insert a single row into a table.
+Inserts a single row into a table.
 
 
 ##### Parameters
@@ -73,7 +73,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ### delete( $table, $where)
 
-Delete rows from a table.
+Deletes rows from a table.
 
 
 ##### Parameters
@@ -129,7 +129,7 @@ __Note :__ As of version `0.3`, multiple conditions only support `AND` logical r
 
 ### getRow( $table, $where )
 
-Fetch a single row's data.
+Fetches a single row's data.
 
 
 ##### Parameters
@@ -149,7 +149,7 @@ Fetch a single row's data.
 
 Like `delete()`, the `getRow()` method use a single/multiple conditions array.
 
-__Note : __ : If your condition(s) match several rows, only the first one will be returned.
+__Note :__ : If your condition(s) match several rows, only the first one will be returned.
 
 ```php
 <?php

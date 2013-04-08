@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.5
+  * @version 0.6
   *
 */
 
@@ -257,8 +257,35 @@ Class Pancake
     }
     else
     {
-      error_code( $stmt->errorCode() );
       return FALSE;
     }
+  }
+}
+
+
+
+
+
+/**
+  * PANCAKE CONDITION CLASS
+  * ------------------------------------------------------------
+  *
+  * Specific helper class for Pancake to help build conditional
+  * queries easily.
+  *
+  * ------------------------------------------------------------
+  *
+  * @author Thomas Andreo
+  * @version 0.1 
+  *
+*/
+
+Class PkLogic
+{
+  const LOGIC = "AND";
+
+  __construct( $conditions, $logic )
+  {
+
   }
 }
