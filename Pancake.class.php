@@ -280,16 +280,47 @@ Class Pancake
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.1 
+  * @version 0.1
   *
 */
 
-Class PkLogic
+Class PckLogic
 {
-  const LOGIC = "AND";
+  // Default logic elements
+  const LOGIC   = "AND";
+  const OPERAND = "=";
 
-  __construct( $conditions, $logic )
+  private $statement = "";
+
+  function __construct( $where, $logic )
   {
+    $i = 0;
 
+    foreach ( $where as $field => $value )
+    {
+      $this->statement .= "$field " . const::OPERAND . " ";
+
+      if ( is_int( $value ) )
+      {
+        $this->statement .= $value;
+      }
+      else
+      {
+        $this->statement .= "'$value'";
+      }
+
+      $this->statement .= " ";
+
+      if ( isset( $logic[$i] ))
+      {
+        $this->statement .= $logic[$i];
+      }
+      else
+      {
+        $this->statement .= const::LOGIC;
+      }
+
+      $i++;
+    }
   }
 }
