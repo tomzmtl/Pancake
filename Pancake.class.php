@@ -56,8 +56,12 @@ Class Pancake
   */
   function createSession()
   {
+    $pdo_options = array( PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES UTF8" );
+
     return new PDO( "mysql:host=$this->db_host;dbname=$this->db_name",
-                              $this->db_user, $this->db_pass );
+                     $this->db_user,
+                     $this->db_pass,
+                     $pdo_options );
   }
 
 
@@ -203,7 +207,7 @@ Class Pancake
     $dbh = $this->createSession();
 
     $stmt = $dbh->prepare($q);
-    
+
     if ( $stmt->execute() === TRUE )
     {
       return $dbh->rowCount();
