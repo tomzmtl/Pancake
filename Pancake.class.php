@@ -288,39 +288,75 @@ Class Where
 {
   // Default logic elements
   const LOGIC   = "AND";
-  const OPERAND = "=";
+  const COMPARE = "=";
 
+  // SQL condition statement
   private $statement = "";
 
-  function __construct( $where, $logic )
+
+  function __construct( $args )
   {
     $i = 0;
 
-    foreach ( $where as $field => $value )
+    foreach ( $args as $cond )
     {
-      $this->statement .= "$field " . const::OPERAND . " ";
-
-      if ( is_int( $value ) )
+      if ( $i > 0 )
       {
-        $this->statement .= $value;
+        $this->space();
+
+        if ( isset( $cond['logic'] ))
+        {
+          $this->append( $cond['logic'] );
+        }
+        else
+        {
+          $this->append( self::LOGIC );
+        }
+
+        $this->space();
+      }
+
+      $this->append( $cond['key'] );
+
+      $this->space();
+
+      if ( isset( $cond['compare'] ))
+      {
+        $this->append( $cond['compare'] );
       }
       else
       {
-        $this->statement .= "'$value'";
+        $this->append( self::COMPARE );
       }
 
-      $this->statement .= " ";
+      $this->space();
 
-      if ( isset( $logic[$i] ))
+      if ( is_string( $cond['value'] ))
       {
-        $this->statement .= $logic[$i];
+        $this->append( "'" . $cond['value'] . "'" );
       }
       else
       {
-        $this->statement .= const::LOGIC;
+        $this->append( $cond['value'] );
       }
 
       $i++;
     }
   }
+
+  private function append($content)
+  {
+    $this->statement .= $content;
+  }
+
+  private function space()
+  {
+    $this->append(" ");
+  }
+
+  public function get()
+  {
+    return "WHERE " . $this->statement;
+  }
+
 }

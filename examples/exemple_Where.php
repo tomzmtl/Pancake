@@ -7,9 +7,22 @@ require_once('../Pancake.class.php');
 $pancake = new Pancake( "pancake_demo", "root", "root", "localhost" );
 
 $where = array(
-  'first_name' => "Thomas",
-  'last_name'  => "Petate",
-  'age'        => 20
+  array(
+    'key'      => "first_name",
+    'value'    => "Thomas"
+  ),
+  array(
+    'key'     => "age",
+    'value'   => 20,
+    'compare' => ">"
+  ),
+  array(
+    'key'     => "age",
+    'value'   => 24,
+    'logic'   => "OR"
+  )
 );
 
-new Where($where);
+$logic = array();
+
+new Where( $where );
