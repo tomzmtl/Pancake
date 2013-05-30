@@ -280,20 +280,37 @@ Class Pancake
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.1
+  * @version 1.0
   *
 */
 
 Class Where
 {
   // Default logic elements
-  const LOGIC   = "AND";
   const COMPARE = "=";
+  const LOGIC   = "AND";
 
   // SQL condition statement
   private $statement = "";
 
 
+  /**
+    * Class constructor.
+    *
+    * @param array $args
+    * Set of conditions needed to build the SQL statement.
+    * Should be an array of arrays, one for each sub-condition.
+    *
+    * Available fields for each sub-array :
+    *
+    * key     : the name of the columns
+    * value   : the value associated to the key
+    * compare : (optional) comparison operator for the given key/value pair.
+    *           Default to "="
+    * logic   : (optional) logical relation to the other conditions.
+    *           Default to "AND"
+    *
+  */
   function __construct( $args )
   {
     $i = 0;
@@ -344,16 +361,32 @@ Class Where
     }
   }
 
+  /**
+    * Appends content to the Class SQL statement.
+    *
+    * @param mixed $content
+    * Content to append.
+    *
+  */
   private function append($content)
   {
     $this->statement .= $content;
   }
 
+  /**
+    * Appends a space to the Class SQL statement.
+  */
   private function space()
   {
     $this->append(" ");
   }
 
+  /**
+    * Outputs the condition as a full WHERE SQL statement
+    *
+    * @return string
+    *
+  */
   public function get()
   {
     return "WHERE " . $this->statement;
