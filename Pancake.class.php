@@ -277,6 +277,8 @@ Class Pancake
   * Specific helper class for Pancake to help build conditional
   * queries easily.
   *
+  * See examples/Where.php to get started using it.
+  *
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
