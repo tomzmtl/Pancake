@@ -284,7 +284,7 @@ Class Pancake
   *
 */
 
-Class PckLogic
+Class Where
 {
   // Default logic elements
   const LOGIC   = "AND";
