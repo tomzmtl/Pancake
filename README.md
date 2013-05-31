@@ -23,6 +23,7 @@ You'll have to provide your database credentials.
 ?>
 ```
 
+-----
 
 
 ## Pancake Methods
