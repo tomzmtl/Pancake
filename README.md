@@ -148,6 +148,7 @@ Fetches a single row's data.
   * To use __multiple conditions__, and learn more about how conditions are handled by Pancake, see the `Where` helper Class documentation below.
 
 
+-----
 
 
 ## Where helper class
@@ -186,10 +187,10 @@ Each sub-array represents a sub-condition.
 
 #### Structure of a sub-array
 
-  * `key` `string` Name of the column
-  * `value` 'int|string' Value associated with the key
-  * `compare` 'string' (optional) Comparison operator for the given key/value pair. Accepted values are "<", "<=", "=", ">=", ">", "!=". Default to "=".
-  * `logic` `string` (optional) Logical relation to the other conditions. Accepted values are "AND" and "OR". Default to "AND".
+  * `key` Name of the column
+  * `value` Value associated with the key (int or string)
+  * `compare` (optional) Comparison operator for the given key/value pair. Accepted values are "<", "<=", "=", ">=", ">", "!=". Default to "=".
+  * `logic` (optional) Logical relation to the other conditions. Accepted values are "AND" and "OR". Default to "AND".
 
 If void or incorrect values are provided for `compare` and/or `logic`, default values will be used.
 
