@@ -64,7 +64,7 @@ Provide an array with key/value pairs matching your table's column names.
   );
 
   // execute insertion on the users table
-  $pancake->insert( "users", $data);
+  $pancake->insert( "users", $data );
 
 ?>
 ```
@@ -79,7 +79,7 @@ Deletes rows from a table.
 ##### Parameters
 
   * `string` $table : Table to delete the entry from.
-  * `array` $where : A set of conditions to select the data to delete.
+  * `mixed` $where : A set of conditions to select the data to delete. Can be an array or a `Where` class instance (see below).
 
 
 ##### Return values
@@ -90,11 +90,9 @@ Deletes rows from a table.
 
 ##### Usage
 
-Provide a set of conditions matching the entries to delete.
-
 ```php
 <?php
-  
+
   // delete the row with the ID 34
 
   $where = array(
@@ -106,24 +104,9 @@ Provide a set of conditions matching the entries to delete.
 ?>
 ```
 
-To use multiple conditions, use a multiple-rows array :
+#### Additional notes
 
-```php
-<?php
-
-  // delete all users of age 25 from the USA
-
-  $where = array(
-    'age'     => 25,
-    'country' => "USA"
-  );
-
-  $pancake->delete( "users", $where );
-
-?>
-```
-
-__Note :__ As of version `0.3`, multiple conditions only support `AND` logical relations.
+  * To use __multiple conditions__, and learn more about how conditions are handled by Pancake, see the `Where` helper Class documentation below.
 
 
 
@@ -135,7 +118,7 @@ Fetches a single row's data.
 ##### Parameters
 
   * `string` $table : Table to get the data from.
-  * `array` $where : A set of conditions to select the data to return.
+  * `mixed` $where : A set of conditions to select the data to return. Can be an array or a `Where` class instance (see below).
 
 
 ##### Return values
@@ -146,10 +129,6 @@ Fetches a single row's data.
 
 
 ##### Usage
-
-Like `delete()`, the `getRow()` method use a single/multiple conditions array.
-
-__Note :__ : If your condition(s) match several rows, only the first one will be returned.
 
 ```php
 <?php
@@ -163,4 +142,86 @@ __Note :__ : If your condition(s) match several rows, only the first one will be
 ?>
 ```
 
-__Note :__ As of version `0.3`, multiple conditions only support `AND` logical relations.
+#### Additional notes
+
+  * If your condition(s) match several rows, only the first one will be returned.
+  * To use __multiple conditions__, and learn more about how conditions are handled by Pancake, see the `Where` helper Class documentation below.
+
+
+
+
+## Where helper class
+
+Pancake core methods accept simple arrays to define WHERE conditions.
+Those will always use `=` comparison operator and `AND` logical bind with other conditions.
+
+Example :
+
+```php
+<?php
+
+  $where = array(
+    'age'     => 20,
+    'country' => "Canada"
+  );
+
+  $pancake->delete( "users", $where );
+
+?>
+```
+
+This will translate by the following SQL statement :
+
+```sql
+DELETE FROM table WHERE age = 20 AND country = 'Canada'
+```
+
+The `Where` helper class is here to fulfill the needs for more complex condition sets.
+To use it, simply provide an instance of the `Where` class in place of the aforementioned condition array.
+
+### Creating a Where instance
+
+`Where` constructor takes as arguments an array of arrays.
+Each sub-array represents a sub-condition.
+
+#### Structure of a sub-array
+
+  * `key` `string` Name of the column
+  * `value` 'int|string' Value associated with the key
+  * `compare` 'string' (optional) Comparison operator for the given key/value pair. Accepted values are "<", "<=", "=", ">=", ">", "!=". Default to "=".
+  * `logic` `string` (optional) Logical relation to the other conditions. Accepted values are "AND" and "OR". Default to "AND".
+
+If void or incorrect values are provided for `compare` and/or `logic`, default values will be used.
+
+#### Examples
+
+```php
+<?php
+
+  $args = array(
+    array(
+      'key'     => "age",
+      'value'   => 20,
+      'compare' => ">="
+    ),
+    array(
+      'key'   => "country",
+      'value' => "Canada",
+      'logic' => "OR"
+    )
+  );
+
+  $results = $pancake->getRow( "users", new Where($args) );
+
+?>
+```
+
+This will translate by the following SQL statement :
+
+```sql
+SELECT * FROM table WHERE age >= 20 OR country = 'Canada'
+```
+
+#### Additional notes
+
+Pancake methods using condition sets can take either a Where instance or a Where-ready array as argument.

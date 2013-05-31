@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.6
+  * @version 0.6 [wip]
   *
 */
 
@@ -111,26 +111,24 @@ Class Pancake
 
 
   /**
-    * Converts a WHERE-like array into a SQL-readable
-    * coondition. ex: "a = 1 AND b = 'b'"
+    * Converts a WHERE-like array into a Where class instance.
+    * Data errors are processed from within the Where class constructor.
     *
     * @param  array
-    * @return string
+    * @return object Where
     *
   */
-  private function getConditions( $where )
+  private function buildWhereObject( $where )
   {
-    $conditions = array();
-
-    foreach ( $where as $field => $value )
+    if ( $where instanceof Where )
     {
-      if ( is_int( $value ) )
-        $conditions[] = "$field = $value";
-      else
-        $conditions[] = "$field = '$value'";
+      return $where;
+    }
+    else
+    {
+      return new Where($where);
     }
 
-    return implode( " AND " , $conditions );
   }
 
 
@@ -167,7 +165,6 @@ Class Pancake
 
     $dbh = $this->createSession();
 
-
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute( array_values($data) ))
@@ -200,9 +197,9 @@ Class Pancake
   */
   public function delete( $table, $where )
   {
-    $conditions = $this->getConditions( $where );
+    $where = $this->buildWhereObject($where);
 
-    $q = "DELETE FROM $table WHERE $conditions";
+    $q = "DELETE FROM $table WHERE " . $where->output();
 
     $dbh = $this->createSession();
 
@@ -238,9 +235,9 @@ Class Pancake
   */
   public function getRow( $table, $where )
   {
-    $conditions = $this->getConditions( $where );
+    $where = $this->buildWhereObject($where);
 
-    $q = "SELECT * FROM $table WHERE $conditions LIMIT 0,1";
+    $q = "SELECT * FROM $table WHERE " . $where->output() . " LIMIT 0,1";
 
     $dbh = $this->createSession();
 
@@ -295,6 +292,10 @@ Class Where
   // SQL condition statement
   private $statement = "";
 
+  // Accepted logic elements
+  private $compare = array("<","<=","=",">=",">","!=");
+  private $logic   = array("AND","OR");
+
 
   /**
     * Class constructor.
@@ -317,49 +318,86 @@ Class Where
   {
     $i = 0;
 
-    foreach ( $args as $cond )
+    if ( count($args) === 0 )
     {
-      if ( $i > 0 )
+      throw new Exception("Invalid data provided to Where constructor.");
+    }
+    else
+    {
+      // if a multi-dimension array is provided (complex mode)
+      if ( count($args) !== count( $args, COUNT_RECURSIVE ))
       {
-        $this->space();
-
-        if ( isset( $cond['logic'] ))
+        foreach ( $args as $cond )
         {
-          $this->append( $cond['logic'] );
+          if ( $i > 0 )
+          {
+            $this->space();
+
+            if ( isset( $cond['logic'] ) && in_array( $cond['logic'], $this->logic, TRUE ))
+            {
+              $this->append( $cond['logic'] );
+            }
+            else
+            {
+              $this->append( self::LOGIC );
+            }
+
+            $this->space();
+          }
+
+          $this->append( $cond['key'] );
+
+          $this->space();
+
+          if ( isset( $cond['compare'] ) && in_array( $cond['compare'], $this->compare, TRUE ))
+          {
+            $this->append( $cond['compare'] );
+          }
+          else
+          {
+            $this->append( self::COMPARE );
+          }
+
+          $this->space();
+
+          if ( is_string( $cond['value'] ))
+          {
+            $this->append( "'" . $cond['value'] . "'" );
+          }
+          else
+          {
+            $this->append( $cond['value'] );
+          }
+
+          $i++;
         }
-        else
-        {
-          $this->append( self::LOGIC );
-        }
-
-        $this->space();
       }
-
-      $this->append( $cond['key'] );
-
-      $this->space();
-
-      if ( isset( $cond['compare'] ))
-      {
-        $this->append( $cond['compare'] );
-      }
+      // if a single-dimension array is provided (simple mode)
       else
       {
-        $this->append( self::COMPARE );
-      }
+        $i = 0;
 
-      $this->space();
+        foreach ( $args as $field => $value )
+        {
+          if ( $i > 0 )
+          {
+            $this->append( " " . self::LOGIC . " " );
+          }
 
-      if ( is_string( $cond['value'] ))
-      {
-        $this->append( "'" . $cond['value'] . "'" );
-      }
-      else
-      {
-        $this->append( $cond['value'] );
-      }
+          $this->append( $field . " " . self::COMPARE . " " );
 
-      $i++;
+          if ( is_string( $value ))
+          {
+            $this->append( "'" . $value . "'" );
+          }
+          else
+          {
+            $this->append( $value );
+          }
+
+          $i++;
+        }
+      }
     }
   }
 
@@ -389,7 +427,7 @@ Class Where
     * @return string
     *
   */
-  public function get()
+  public function output()
   {
     return "WHERE " . $this->statement;
   }

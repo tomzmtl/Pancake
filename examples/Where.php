@@ -3,10 +3,26 @@
 // load Pancake
 require_once('../Pancake.class.php');
 
-// specify your databases credentials here
-$pancake = new Pancake( "pancake_demo", "root", "root", "localhost" );
 
-$where = array(
+/* Simple Mode */
+
+$conditions = array(
+  'first_name' => "Thomas",
+  'age' => 20
+);
+
+$where = new Where( $conditions );
+
+echo "Simple : " . $where->output();
+
+
+
+echo "<br /><br />";
+
+
+/* Complex Mode */
+
+$conditions = array(
   array(
     'key'      => "first_name",
     'value'    => "Thomas"
@@ -14,7 +30,7 @@ $where = array(
   array(
     'key'     => "age",
     'value'   => 20,
-    'compare' => ">"
+    'compare' => "!="
   ),
   array(
     'key'     => "age",
@@ -23,6 +39,6 @@ $where = array(
   )
 );
 
-$logic = array();
+$where = new Where( $conditions );
 
-new Where( $where );
+echo "Complex : " . $where->output();
