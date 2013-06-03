@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.6
+  * @version 0.6.1
   *
 */
 
@@ -184,8 +184,9 @@ Class Pancake
     * @param string $table
     * Table to delete the entry from.
     *
-    * @param array $where
+    * @param mixed $where
     * A set of conditions to select the data to delete.
+    * Can be an array or a Where object (see dcumentation).
     *
     * @return mixed
     * Number of deleted entries (int) if the query didn't fail.
@@ -207,7 +208,7 @@ Class Pancake
 
     if ( $stmt->execute() === TRUE )
     {
-      return $dbh->rowCount();
+      return $stmt->rowCount();
     }
     else
     {
@@ -224,12 +225,13 @@ Class Pancake
     * @param string $table
     * Table to get the data from.
     *
-    * @param array $where
+    * @param mixed $where
     * A set of conditions to select the data to return.
+    * Can be an array or a Where object (see documentation).
     *
     * @return mixed
     * array : On success, an associative array with keys matching the column names.
-    * int   : If the query succeed but get an empty result, (int) 0.
+    * int   : If the query succeeded but get an empty result, (int) 0.
     * bool  : On query failure, FALSE.
     *
   */
@@ -429,7 +431,7 @@ Class Where
   */
   public function output()
   {
-    return "WHERE " . $this->statement;
+    return $this->statement;
   }
 
 }
