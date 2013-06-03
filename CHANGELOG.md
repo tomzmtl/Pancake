@@ -1,6 +1,12 @@
 ## Pancake change log
 
 
+###### version `0.7`
+
+  * Added update() method.
+
+-----
+
 ###### version `0.6.1`
 
 Following bug fixed :

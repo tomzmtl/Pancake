@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.6.1
+  * @version 0.7
   *
 */
 
@@ -263,6 +263,65 @@ Class Pancake
       return FALSE;
     }
   }
+
+
+  /**
+    * Updates a table.
+    *
+    * @param string $table
+    * Table to update.
+    *
+    * @param array $set
+    * Set of values to update.
+    *
+    * @param mixed $where
+    * A set of conditions to the data to update.
+    * Can be an array or a Where object (see documentation).
+    *
+    * @return mixed
+    * int  : On success, number of rows affected.
+    * bool : On failure, FALSE.
+    *
+  */
+  public function update( $table, $set, $where )
+  {
+    $where = $this->buildWhereObject($where);
+
+    $values = array();
+
+    foreach ( $set as $col => $val )
+    {
+      if ( is_string( $val ))
+      {
+        $val = "'$val'";
+      }
+
+      $values[] = "$col = $val";
+    }
+
+    $values = implode( ", ", $values );
+
+    $q = "UPDATE $table SET $values WHERE " . $where->output();
+
+    $dbh = $this->createSession();
+
+    $stmt = $dbh->prepare($q);
+
+    if ( $stmt->execute() === TRUE )
+    {
+      return $stmt->rowCount();
+    }
+    else
+    {
+      return FALSE;
+    }
+
+
+  }
+
+
+
+
 }
 
 

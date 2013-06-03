@@ -105,15 +105,11 @@ Deletes rows from a table.
 ?>
 ```
 
-#### Additional notes
-
-  * To use __multiple conditions__, and learn more about how conditions are handled by Pancake, see the `Where` helper Class documentation below.
-
 
 
 ### getRow( $table, $where )
 
-Fetches a single row's data.
+Fetches a single row of data.
 
 
 ##### Parameters
@@ -146,8 +142,23 @@ Fetches a single row's data.
 #### Additional notes
 
   * If your condition(s) match several rows, only the first one will be returned.
-  * To use __multiple conditions__, and learn more about how conditions are handled by Pancake, see the `Where` helper Class documentation below.
 
+
+
+### update( $table, $set, $where )
+
+Updates data on a table.
+
+##### Parameters
+
+  * `string` $table : Table to update.
+  * `array` $set : Set of values to update.
+  * `mixed` $where : A set of conditions to the data to update. Can be an array or a `Where` class instance (see below).
+
+##### Return values
+
+  * `int` Number of rows affected by the update.
+  * `bool(FALSE)` on failure.
 
 -----
 
