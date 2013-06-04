@@ -233,8 +233,7 @@ Class Pancake
 
     $q = "INSERT INTO $table ($keys) VALUES ($placeholders)";
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute( array_values($data) ))
@@ -272,8 +271,7 @@ Class Pancake
 
     $q = "DELETE FROM $table WHERE " . $where->output();
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute() === TRUE )
@@ -311,8 +309,7 @@ Class Pancake
 
     $q = "SELECT * FROM $table WHERE " . $where->output() . " LIMIT 0,1";
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute() )
@@ -373,8 +370,7 @@ Class Pancake
 
     $q = "UPDATE $table SET $values WHERE " . $where->output();
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute() === TRUE )
