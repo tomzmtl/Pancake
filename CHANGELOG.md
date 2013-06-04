@@ -1,5 +1,11 @@
 ## Pancake change log
 
+###### version `1.0.0`
+
+  * Added count() method.
+
+-----
+
 ###### version `0.9`
 
   * Added query() generic method.

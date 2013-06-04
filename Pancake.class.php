@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.9
+  * @version 1.0.0 dev
   *
 */
 
@@ -416,8 +416,6 @@ Class Pancake
     {
       return FALSE;
     }
-
-
   }
 
 
@@ -461,6 +459,39 @@ Class Pancake
   }
 
 
+  /**
+    * Counts items on a table.
+    *
+    * @param string $table
+    * Table to get the data from.
+    *
+    * @param mixed $where
+    * A set of conditions.
+    * Can be an array or a Where object (see documentation).
+    *
+    * @return mixed
+    * int         : On success.
+    * bool(FALSE) : On failure.
+    *
+  */
+  public function count( $table, $where )
+  {
+    $where = $this->buildWhereObject($where);
+
+    $q = "SELECT COUNT(*) FROM $table WHERE " . $where->output();
+
+    $dbh  = $this->createSession();
+    $stmt = $dbh->prepare($q);
+
+    if ( $stmt->execute() === TRUE )
+    {
+      return (int) $stmt->fetchColumn();
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
 }
 
 

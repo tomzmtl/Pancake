@@ -1,6 +1,6 @@
 # Pancake
 
-Current version : `0.9`
+Current version : `1.0.0`
 
 A simple PDO-based MySQL abstraction class.
 
@@ -190,9 +190,25 @@ Return values are simplified on purpose to promote the other methods.
 
 ##### Return values
 
-  * `array` : an associative array of data (SELECT queries).
-  * `bool(TRUE)` : all queries except SELECT.
-  * `bool(FALSE)` : query failure (all queries).
+  * `array` An associative array of data (SELECT queries).
+  * `bool(TRUE)` on success except SELECT.
+  * `bool(FALSE)` on failure (all queries).
+
+
+
+### count( $query )
+
+Counts items on a table.
+
+##### Parameters
+
+  * `string` $table : Table to get the data from.
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance (see below).
+
+##### Return values
+
+  * `int` on success.
+  * `bool(FALSE)` on failure.
 
 -----
 
