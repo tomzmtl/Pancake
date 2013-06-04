@@ -1,6 +1,6 @@
 # Pancake
 
-Current version : __0.6__
+Current version : __0.8__
 
 A simple PDO-based MySQL abstraction class.
 
@@ -158,6 +158,23 @@ Updates data on a table.
 ##### Return values
 
   * `int` Number of rows affected by the update.
+  * `bool(FALSE)` on failure.
+
+
+
+### getVar( $table, $column, $where )
+
+Gets a single value from the DB. Auto-typecast if possible.
+
+##### Parameters
+
+  * `string` $table : Table to get the data from.
+  * `array` $column : Column where to get the value from.
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance (see below).
+
+##### Return values
+
+  * `mixed` On success, the type-casted value. May be a `string` or `int`.
   * `bool(FALSE)` on failure.
 
 -----
