@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.8
+  * @version 0.9
   *
 */
 
@@ -210,6 +210,41 @@ Class Pancake
   |                 PUBLIC METHODS                    |
   |                                                   |
   +--------------------------------------------------*/
+
+  /**
+    * Generic method to execute any manual query.
+    *
+    * @param string $query
+    *
+    * @return mixed
+    * array      : an associative array of data (SELECT queries).
+    * bool(TRUE) : all queries except SELECT.
+    * bool(FALSE): query failure (all queries).
+    *
+  */
+  public function query( $query )
+  {
+    $dbh  = $this->createSession();
+    $stmt = $dbh->prepare($query);
+
+    if ( $stmt->execute() )
+    {
+      $result = $stmt->fetch( PDO::FETCH_ASSOC );
+
+      if ( is_array( $result ))
+      {
+        return $result;
+      }
+      else
+      {
+        return TRUE;
+      }
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
 
   /**
     * Insert a new entry in the DB. Takes as argument a data array

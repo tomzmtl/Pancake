@@ -1,6 +1,6 @@
 # Pancake
 
-Current version : `0.8`
+Current version : `0.9`
 
 A simple PDO-based MySQL abstraction class.
 
@@ -176,6 +176,23 @@ Gets a single value from the DB. Auto-typecast if possible.
 
   * `mixed` On success, the type-casted value. May be a `string` or `int`.
   * `bool(FALSE)` on failure.
+
+
+
+### query( $query )
+
+Generic method to execute any manual query.
+Return values are simplified on purpose to promote the other methods.
+
+##### Parameters
+
+  * `string` $query : Query to execute.
+
+##### Return values
+
+  * `array` : an associative array of data (SELECT queries).
+  * `bool(TRUE)` : all queries except SELECT.
+  * `bool(FALSE)` : query failure (all queries).
 
 -----
 
