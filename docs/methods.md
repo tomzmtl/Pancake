@@ -8,8 +8,7 @@ Here are listed all methods provided by Pancake.
 
 ```php
 
-  Pancake::insert( $table, $data );
-
+Pancake::insert( $table, $data );
 ```
 
 ##### Parameters
@@ -51,8 +50,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ```php
 
-  Pancake::delete( $table, $where );
-
+Pancake::delete( $table, $where );
 ```
 
 ##### Parameters
@@ -89,8 +87,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ```php
 
-  Pancake::getRow( $table, $where );
-
+Pancake::getRow( $table, $where );
 ```
 
 ##### Parameters
@@ -120,7 +117,7 @@ Provide an array with key/value pairs matching your table's column names.
 ?>
 ```
 
-### Additional notes
+##### Additional notes
 
   * If your condition(s) match several rows, only the first one will be returned.
 
@@ -130,8 +127,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ```php
 
-  Pancake::update( $table, $set, $where );
-
+Pancake::update( $table, $set, $where );
 ```
 
 ##### Parameters
@@ -151,8 +147,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ```php
 
-  Pancake::getVar( $table, $column, $where );
-
+Pancake::getVar( $table, $column, $where );
 ```
 
 ##### Parameters
@@ -176,8 +171,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ```php
 
-  Pancake::query( $query );
-
+Pancake::query( $query );
 ```
 
 ##### Parameters
@@ -200,8 +194,7 @@ Provide an array with key/value pairs matching your table's column names.
 
 ```php
 
-  Pancake::count( $table, $where );
-
+Pancake::count( $table, $where );
 ```
 
 ##### Parameters
