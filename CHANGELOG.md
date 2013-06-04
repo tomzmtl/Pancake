@@ -1,6 +1,13 @@
 ## Pancake change log
 
 
+###### version `0.8`
+
+  * Added getVar() method.
+  * Added private methods to request and manipulate column types.
+
+-----
+
 ###### version `0.7`
 
   * Added update() method.

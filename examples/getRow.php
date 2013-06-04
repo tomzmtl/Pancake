@@ -9,7 +9,7 @@ $pancake = new Pancake( "pancake", "root", "root", "localhost" );
 // prepare your data
 $where = array( 'id' => 44 );
 
-// execute insertion on the users table
+// fetch data from table
 $row = $pancake->getRow( "users", $where );
 
 

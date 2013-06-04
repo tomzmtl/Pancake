@@ -10,7 +10,7 @@
   * ------------------------------------------------------------
   *
   * @author Thomas Andreo
-  * @version 0.7
+  * @version 0.8
   *
 */
 
@@ -21,6 +21,12 @@ Class Pancake
   private $db_user = NULL;
   private $db_pass = NULL;
   private $db_host = NULL;
+
+  // Used to convert native_type to PDO_type
+  private $column_types = array(
+    PDO::PARAM_INT => array( "int", "tinyint" ),
+    PDO::PARAM_STR => array( "varchar", "text" )
+  );
 
   /**
     * Class constructor.
@@ -132,6 +138,70 @@ Class Pancake
   }
 
 
+  /**
+    * Gets the SQL type from a specific columns.
+    *
+    * @param  string $table
+    * Table name.
+    *
+    * @param string $name
+    * Column name.
+    *
+    * @return int
+    * PDO PARAM_* constant value.
+    * (see http://php.net/manual/en/pdo.constants.php)
+    *
+  */
+  private function getColumnType( $table, $name )
+  {
+    $q = "SELECT DATA_TYPE
+          FROM   INFORMATION_SCHEMA.COLUMNS
+          WHERE  TABLE_NAME   = '$table'
+          AND    COLUMN_NAME  = '$name'
+          AND    TABLE_SCHEMA = '$this->db_name'";
+
+    $dbh  = $this->createSession();
+    $stmt = $dbh->prepare($q);
+
+    $type = $stmt->fetchColumn(0);
+
+    foreach ( $this->column_types as $pdo_type => $native )
+    {
+      if ( in_array( $type, $native, TRUE ))
+      {
+        return $pdo_type;
+      }
+    }
+
+    // default : return string type
+    return PDO::PARAM_STR;
+  }
+
+
+  /**
+    * Auto-typecast a value based on its PDO type.
+    *
+    * @param string $var
+    * Variable coming straight from the DB (expected to be a string).
+    *
+    * @param int $pdo_type
+    * Value of the PDO constant matching the variable type.
+    * (see http://php.net/manual/en/pdo.constants.php)
+    *
+    * @return mixed
+    * Type-casted (or not) value.
+    *
+  */
+  private function typify( $var, $pdo_type )
+  {
+    if ( $pdo_type === PDO::PARAM_INT )
+    {
+      return (int) $var;
+    }
+
+    return $var;
+  }
+
 
 
 
@@ -163,8 +233,7 @@ Class Pancake
 
     $q = "INSERT INTO $table ($keys) VALUES ($placeholders)";
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute( array_values($data) ))
@@ -202,8 +271,7 @@ Class Pancake
 
     $q = "DELETE FROM $table WHERE " . $where->output();
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute() === TRUE )
@@ -241,8 +309,7 @@ Class Pancake
 
     $q = "SELECT * FROM $table WHERE " . $where->output() . " LIMIT 0,1";
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute() )
@@ -303,8 +370,7 @@ Class Pancake
 
     $q = "UPDATE $table SET $values WHERE " . $where->output();
 
-    $dbh = $this->createSession();
-
+    $dbh  = $this->createSession();
     $stmt = $dbh->prepare($q);
 
     if ( $stmt->execute() === TRUE )
@@ -320,6 +386,44 @@ Class Pancake
   }
 
 
+  /**
+    * Gets a single value from the DB.
+    * Auto-typecast if possible.
+    *
+    * @param string $table
+    * Table to get the data from.
+    *
+    * @param array $column
+    * Column where to get the value from.
+    *
+    * @param mixed $where
+    * A set of conditions.
+    * Can be an array or a Where object (see documentation).
+    *
+    * @return mixed
+    * mixed : On success, the type-casted value. May be a string or int.
+    * bool  : On failure, FALSE.
+    *
+  */
+  public function getVar( $table, $column, $where )
+  {
+    $where = $this->buildWhereObject($where);
+
+    $q = "SELECT $column FROM $table WHERE " . $where->output() . " LIMIT 0,1";
+
+    $dbh  = $this->createSession();
+    $stmt = $dbh->prepare($q);
+
+    if ( $stmt->execute() === TRUE )
+    {
+      return $this->typify( $stmt->fetchColumn(0),
+                            $this->getColumnType( $table, $column ));
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
 
 
 }
