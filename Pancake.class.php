@@ -1,16 +1,34 @@
 <?php
 
+
+
+/*88888b.                                     888
+888   Y88b                                    888
+888    888                                    888
+888   d88P 8888b.  88888b.   .d8888b  8888b.  888  888  .d88b.
+8888888P"     "88b 888 "88b d88P"        "88b 888 .88P d8P  Y8b
+888       .d888888 888  888 888      .d888888 888888K  88888888
+888       888  888 888  888 Y88b.    888  888 888 "88b Y8b.
+888       "Y888888 888  888  "Y8888P "Y888888 888  888  "Y88*/
+
+
+
 /**
-  * PANCAKE
-  * ------------------------------------------------------------
-  *
   * A PDO-based MySQL Abstraction class.
   * Inspired by the simplicity of EzSQL & Wordpress' WPDB.
   *
   * ------------------------------------------------------------
   *
+  * A note for developers :
+  *
+  *   Functions described in details in the documentation
+  *   are commented with the strict minimum.
+  *   For complete doc, see https://github.com/tomzmtl/Pancake.
+  *
+  * ------------------------------------------------------------
+  *
   * @author Thomas Andreo
-  * @version 1.0.0 dev
+  * @version 1.0.0
   *
 */
 
@@ -142,22 +160,19 @@ Class Pancake
     * Gets the SQL type from a specific columns.
     *
     * @param  string $table
-    * Table name.
-    *
-    * @param string $name
-    * Column name.
+    * @param  string $column
     *
     * @return int
     * PDO PARAM_* constant value.
     * (see http://php.net/manual/en/pdo.constants.php)
     *
   */
-  private function getColumnType( $table, $name )
+  private function getColumnType( $table, $column )
   {
     $q = "SELECT DATA_TYPE
           FROM   INFORMATION_SCHEMA.COLUMNS
           WHERE  TABLE_NAME   = '$table'
-          AND    COLUMN_NAME  = '$name'
+          AND    COLUMN_NAME  = '$column'
           AND    TABLE_SCHEMA = '$this->db_name'";
 
     $dbh  = $this->createSession();
@@ -182,14 +197,11 @@ Class Pancake
     * Auto-typecast a value based on its PDO type.
     *
     * @param string $var
-    * Variable coming straight from the DB (expected to be a string).
-    *
     * @param int $pdo_type
-    * Value of the PDO constant matching the variable type.
+    * PDO PARAM_* constant value.
     * (see http://php.net/manual/en/pdo.constants.php)
     *
     * @return mixed
-    * Type-casted (or not) value.
     *
   */
   private function typify( $var, $pdo_type )
@@ -217,9 +229,6 @@ Class Pancake
     * @param string $query
     *
     * @return mixed
-    * array      : an associative array of data (SELECT queries).
-    * bool(TRUE) : all queries except SELECT.
-    * bool(FALSE): query failure (all queries).
     *
   */
   public function query( $query )
@@ -252,13 +261,9 @@ Class Pancake
     * column names.
     *
     * @param string $table
-    * Table to process the insertion into.
-    *
-    * @param array $data
-    * Set of key/value pairs. Keys must match the table's columns names.
+    * @param array  $data
     *
     * @return mixed
-    * Insert ID (int) if insert is successful, or FALSE on failure.
     *
   */
   public function insert( $table, $data )
@@ -286,15 +291,9 @@ Class Pancake
     * Deletes one or multiple entries based on a set of conditions.
     *
     * @param string $table
-    * Table to delete the entry from.
-    *
     * @param mixed $where
-    * A set of conditions to select the data to delete.
-    * Can be an array or a Where object (see dcumentation).
     *
     * @return mixed
-    * Number of deleted entries (int) if the query didn't fail.
-    * FALSE if a problem occured.
     *
     * Note : this method can return 0 (int), if no error occured
     *        but no row was deleted.
@@ -326,16 +325,9 @@ Class Pancake
     * If multiple results are found, will return the first of the set.
     *
     * @param string $table
-    * Table to get the data from.
-    *
     * @param mixed $where
-    * A set of conditions to select the data to return.
-    * Can be an array or a Where object (see documentation).
     *
     * @return mixed
-    * array : On success, an associative array with keys matching the column names.
-    * int   : If the query succeeded but get an empty result, (int) 0.
-    * bool  : On query failure, FALSE.
     *
   */
   public function getRow( $table, $where )
@@ -371,18 +363,10 @@ Class Pancake
     * Updates a table.
     *
     * @param string $table
-    * Table to update.
-    *
-    * @param array $set
-    * Set of values to update.
-    *
-    * @param mixed $where
-    * A set of conditions to the data to update.
-    * Can be an array or a Where object (see documentation).
+    * @param array  $set
+    * @param mixed  $where
     *
     * @return mixed
-    * int  : On success, number of rows affected.
-    * bool : On failure, FALSE.
     *
   */
   public function update( $table, $set, $where )
@@ -424,18 +408,10 @@ Class Pancake
     * Auto-typecast if possible.
     *
     * @param string $table
-    * Table to get the data from.
-    *
     * @param array $column
-    * Column where to get the value from.
-    *
     * @param mixed $where
-    * A set of conditions.
-    * Can be an array or a Where object (see documentation).
     *
     * @return mixed
-    * mixed : On success, the type-casted value. May be a string or int.
-    * bool  : On failure, FALSE.
     *
   */
   public function getVar( $table, $column, $where )
@@ -449,7 +425,7 @@ Class Pancake
 
     if ( $stmt->execute() === TRUE )
     {
-      return $this->typify( $stmt->fetchColumn(0),
+      return $this->typify( $stmt->fetchColumn(),
                             $this->getColumnType( $table, $column ));
     }
     else
@@ -463,15 +439,9 @@ Class Pancake
     * Counts items on a table.
     *
     * @param string $table
-    * Table to get the data from.
-    *
     * @param mixed $where
-    * A set of conditions.
-    * Can be an array or a Where object (see documentation).
     *
     * @return mixed
-    * int         : On success.
-    * bool(FALSE) : On failure.
     *
   */
   public function count( $table, $where )
@@ -498,10 +468,22 @@ Class Pancake
 
 
 
+
+
+
+/*8       888 888
+888   o   888 888
+888  d8b  888 888
+888 d888b 888 88888b.   .d88b.  888d888 .d88b.
+888d88888b888 888 "88b d8P  Y8b 888P"  d8P  Y8b
+88888P Y88888 888  888 88888888 888    88888888
+8888P   Y8888 888  888 Y8b.     888    Y8b.
+888P     Y888 888  888  "Y8888  888     "Y88*/
+
+
+
+
 /**
-  * PANCAKE CONDITION CLASS
-  * ------------------------------------------------------------
-  *
   * Specific helper class for Pancake to help build conditional
   * queries easily.
   *

@@ -3,6 +3,7 @@
 ###### version `1.0.0`
 
   * Added count() method.
+  * Cleaned comments.
   * Separated methods and Where documentations in separate files under /doc/.
 
 -----
