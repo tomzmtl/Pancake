@@ -1,4 +1,18 @@
-## Pancake change log
+## Pancake change log & roadmap
+
+###### version `1.1.0`
+
+  * Add get() method for multiple-rows data.
+  * Add getColumn() method to get a single column as an array.
+
+----
+
+###### version `1.0.1` `CURRENT`
+
+  * Improved documentation.
+  * Fixed mistakes in documentation.
+
+-----
 
 ###### version `1.0.0`
 
