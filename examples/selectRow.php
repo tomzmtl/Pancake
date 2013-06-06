@@ -10,10 +10,10 @@ $pancake = new Pancake( "pancake", "root", "root", "localhost" );
 $where = array( 'id' => 44 );
 
 // fetch data from table
-$row = $pancake->getRow( "users", $where );
+$row = $pancake->selectRow( "users", $where );
 
 
-/* the getRow() method can return various response type, so be
+/* the selectRow() method can return various response type, so be
  * sure to test every use case.
  *
  * Warning : both int(0) and bool(FALSE) can be returned.

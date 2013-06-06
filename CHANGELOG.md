@@ -12,6 +12,7 @@
 ###### version `1.1.0` `CURRENT`
 
   * Added method `selectAll()` to fetch multiple rows (all fields).
+  * Renamed method 'getRow()` to `selectRow()`
   * Tweaked documentation and comments.
 
 -----

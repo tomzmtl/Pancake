@@ -109,7 +109,7 @@ $where = array(
   'country' => "Canada"
 );
 
-$results = $pancake->getRow( "users", $where );
+$results = $pancake->selectRow( "users", $where );
 ```
 
 ##### Additional notes
@@ -124,7 +124,7 @@ $results = $pancake->getRow( "users", $where );
 
 ```php
 
-Pancake::getRow( $table, $where );
+Pancake::selectRow( $table, $where );
 ```
 
 ##### Parameters
@@ -148,7 +148,7 @@ $where = array(
   'id' => 48
 );
 
-$results = $pancake->getRow( "users", $where );
+$results = $pancake->selectRow( "users", $where );
 ```
 
 ##### Additional notes
@@ -163,7 +163,7 @@ $results = $pancake->getRow( "users", $where );
 
 ```php
 
-Pancake::getRow( $table, $where );
+Pancake::selectRow( $table, $where );
 ```
 
 ##### Parameters
@@ -187,7 +187,7 @@ $where = array(
   'id' => 48
 );
 
-$results = $pancake->getRow( "users", $where );
+$results = $pancake->selectRow( "users", $where );
 ```
 
 ##### Additional notes

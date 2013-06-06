@@ -365,7 +365,7 @@ Class Pancake
     * @return mixed
     *
   */
-  public function getRow( $table, $where )
+  public function selectRow( $table, $where )
   {
     $where = $this->buildWhereObject($where);
 

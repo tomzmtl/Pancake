@@ -55,7 +55,7 @@ $args = array(
   )
 );
 
-$results = $pancake->getRow( "users", new Where($args) );
+$results = $pancake->selectRow( "users", new Where($args) );
 ```
 
 This will translate by the following SQL statement :
