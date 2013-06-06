@@ -29,11 +29,11 @@ if ( is_array($result) ) // success
     }
   }
 }
-elseif ( $row === 0 ) // empty result
+elseif ( $result === 0 ) // empty result
 {
   echo "Nothing to return";
 }
-elseif( $row === FALSE ) // query failure
+elseif( $result === FALSE ) // query failure
 {
   echo "The query failed";
 }
