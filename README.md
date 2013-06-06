@@ -1,6 +1,6 @@
 # Pancake
 
-Current version : `1.0.1`
+Current version : `1.1.0`
 
 A simple PDO-based MySQL abstraction class.
 Inspired by the simplicity of ezSQL and WordPress DB Class.
@@ -13,7 +13,7 @@ Pancake include easy-to-use and straightforward methods for the following operat
   * Insert rows.
   * Delete rows.
   * Update data.
-  * Fetch data (sets, single variable).
+  * Fetch data (sets, single row, single variable).
   * Count items.
 
 

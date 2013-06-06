@@ -42,6 +42,8 @@ $pancake->insert( "users", $data );
 ```
 
 
+-----
+
 
 ## Delete rows
 
@@ -53,7 +55,7 @@ Pancake::delete( $table, $where );
 ##### Parameters
 
   * `string` $table : Table to delete the entry from.
-  * `mixed` $where : A set of conditions to select the data to delete. Can be an array or a `Where` class instance (see below).
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
 
 
 ##### Return values
@@ -76,6 +78,47 @@ $pancake->delete( "users", $where );
 ```
 
 
+-----
+
+
+## Fetch a data set
+
+```php
+
+Pancake::selectAll( $table, $where );
+```
+
+##### Parameters
+
+  * `string` $table : Table to get the data from.
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
+
+
+##### Return values
+
+  * `array` An array of associative arrays with key names matching the table's column names.
+  * `int(0)` if the query returned an empty result.
+  * `bool(FALSE)` if the query failed.
+
+
+##### Usage
+
+```php
+
+$where = array(
+  'country' => "Canada"
+);
+
+$results = $pancake->getRow( "users", $where );
+```
+
+##### Additional notes
+
+  * If data is returned, it will always be as an array of arrays, even if your query returns a single row.
+
+
+-----
+
 
 ## Fetch a single row of data
 
@@ -87,7 +130,7 @@ Pancake::getRow( $table, $where );
 ##### Parameters
 
   * `string` $table : Table to get the data from.
-  * `mixed` $where : A set of conditions to select the data to return. Can be an array or a `Where` class instance (see below).
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
 
 
 ##### Return values
@@ -113,6 +156,47 @@ $results = $pancake->getRow( "users", $where );
   * If your condition(s) match several rows, only the first one will be returned.
 
 
+-----
+
+
+## Fetch a single row of data
+
+```php
+
+Pancake::getRow( $table, $where );
+```
+
+##### Parameters
+
+  * `string` $table : Table to get the data from.
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
+
+
+##### Return values
+
+  * `array` An associative array with key names matching the table's column names.
+  * `int(0)` if the query returned an empty result.
+  * `bool(FALSE)` if the query failed.
+
+
+##### Usage
+
+```php
+
+$where = array(
+  'id' => 48
+);
+
+$results = $pancake->getRow( "users", $where );
+```
+
+##### Additional notes
+
+  * If your condition(s) match several rows, only the first one will be returned.
+
+
+-----
+
 
 ## Update data
 
@@ -125,13 +209,15 @@ Pancake::update( $table, $set, $where );
 
   * `string` $table : Table to update.
   * `array` $set : Set of values to update.
-  * `mixed` $where : A set of conditions to the data to update. Can be an array or a `Where` class instance (see below).
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
 
 ##### Return values
 
   * `int` Number of rows affected by the update.
   * `bool(FALSE)` on failure.
 
+
+-----
 
 
 ## Gets a single value
@@ -145,7 +231,7 @@ Pancake::getVar( $table, $column, $where );
 
   * `string` $table : Table to get the data from.
   * `array` $column : Column where to get the value from.
-  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance (see below).
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
 
 ##### Return values
 
@@ -156,6 +242,29 @@ Pancake::getVar( $table, $column, $where );
 
   * This method will auto-typecast the return value if possible.
 
+
+-----
+
+
+## Counts items
+
+```php
+
+Pancake::count( $table, $where );
+```
+
+##### Parameters
+
+  * `string` $table : Table to get the data from.
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
+
+##### Return values
+
+  * `int` on success.
+  * `bool(FALSE)` on failure.
+
+
+-----
 
 
 ## Execute any manual query
@@ -178,22 +287,3 @@ Pancake::query( $query );
 ##### Additional notes
 
   * Return values are simplified on purpose to promote the other methods.
-
-
-
-## Counts items
-
-```php
-
-Pancake::count( $table, $where );
-```
-
-##### Parameters
-
-  * `string` $table : Table to get the data from.
-  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance (see below).
-
-##### Return values
-
-  * `int` on success.
-  * `bool(FALSE)` on failure.

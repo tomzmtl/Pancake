@@ -27,7 +27,7 @@
 
 /**
   * @author Thomas Andreo
-  * @version 1.0.1
+  * @version 1.1.0
   *
 */
 Class Pancake
@@ -308,6 +308,44 @@ Class Pancake
     if ( $stmt->execute() === TRUE )
     {
       return $stmt->rowCount();
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
+
+
+  /**
+    * Selects all fields matching the conditions.
+    *
+    * @param string $table
+    * @param mixed $where
+    *
+    * @return mixed
+    *
+  */
+  public function selectAll( $table, $where )
+  {
+    $where = $this->buildWhereObject($where);
+
+    $q = "SELECT * FROM $table WHERE " . $where->output();
+
+    $dbh  = $this->createSession();
+    $stmt = $dbh->prepare($q);
+
+    if ( $stmt->execute() )
+    {
+      $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
+
+      if ( is_array( $result ) )
+      {
+        return $result;
+      }
+      else
+      {
+        return 0;
+      }
     }
     else
     {
