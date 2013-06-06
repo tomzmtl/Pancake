@@ -172,10 +172,8 @@ Class Pancake
           AND    COLUMN_NAME  = '$column'
           AND    TABLE_SCHEMA = '$this->db_name'";
 
-    $dbh  = $this->createSession();
-    $stmt = $dbh->prepare($q);
+    $type = $this->query($q);
 
-    $type = $stmt->fetchColumn(0);
 
     foreach ( $this->column_types as $pdo_type => $native )
     {

@@ -3,7 +3,7 @@
 ##### Planned features and improvements
 
   * Add getColumn() method to get a single column as an array.
-  * Use query() in getColumnType() method.
+
 
 ----
 
@@ -12,7 +12,8 @@
 ###### version `1.1.0` `CURRENT`
 
   * Added method `selectAll()` to fetch multiple rows (all fields).
-  * Renamed method 'getRow()` to `selectRow()`
+  * Renamed method 'getRow()` to `selectRow()`.
+  * Use `query()` in `getColumnType()` private method.
   * Tweaked documentation and comments.
 
 -----
