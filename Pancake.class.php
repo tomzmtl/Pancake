@@ -393,6 +393,52 @@ Class Pancake
 
 
   /**
+    * Selects a single column of a set of results and returns it as
+    * a single-dimension array.
+    *
+    * @param string $table
+    * @param mixed $where
+    *
+    * @return mixed
+    *
+  */
+  public function selectCol( $table, $column, $where )
+  {
+    $where = $this->buildWhereObject($where);
+
+    $q = "SELECT $column FROM $table WHERE " . $where->output();
+
+    $dbh  = $this->createSession();
+    $stmt = $dbh->prepare($q);
+
+    if ( $stmt->execute() )
+    {
+      $results = $stmt->fetchAll( PDO::FETCH_ASSOC );
+      $result  = array();
+
+      // converts array from multi to single-dimension
+      foreach ( $results as $r )
+      {
+        $result[] = array_shift($r);
+      }
+
+      if ( is_array( $result ) )
+      {
+        return $result;
+      }
+      else
+      {
+        return 0;
+      }
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
+
+
+  /**
     * Updates a table.
     *
     * @param string $table

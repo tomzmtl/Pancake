@@ -198,6 +198,42 @@ $results = $pancake->selectRow( "users", $where );
 -----
 
 
+## Fetch a single column of data
+
+```php
+
+Pancake::selectCol( $table, $where );
+```
+
+##### Parameters
+
+  * `string` $table : Table to get the data from.
+  * `string` $column : Column to extract
+  * `mixed` $where : A set of conditions. Can be an array or a `Where` class instance.
+
+
+##### Return values
+
+  * `array` A single-dimensional array of values.
+  * `int(0)` if the query returned an empty result.
+  * `bool(FALSE)` if the query failed.
+
+
+##### Usage
+
+```php
+
+$where = array(
+  'country' => "Canada"
+);
+
+$results = $pancake->selectRow( "users", $where );
+```
+
+
+-----
+
+
 ## Update data
 
 ```php
@@ -241,6 +277,7 @@ Pancake::getVar( $table, $column, $where );
 ##### Additional notes
 
   * This method will auto-typecast the return value if possible.
+  * If the conditions match several row, the first one will be returned.
 
 
 -----
