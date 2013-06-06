@@ -1,17 +1,11 @@
 ## Pancake change log & roadmap
 
-##### Planned features and improvements
-
-  * Add getColumn() method to get a single column as an array.
-
-
-----
-
 #### Change log
 
 ###### version `1.1.0` `CURRENT`
 
   * Added method `selectAll()` to fetch multiple rows (all fields).
+  * Added method `selectCol()` to get a single column as an array.
   * Renamed method 'getRow()` to `selectRow()`.
   * Use `query()` in `getColumnType()` private method.
   * Tweaked documentation and comments.
