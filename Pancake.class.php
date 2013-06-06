@@ -9,30 +9,27 @@
 8888888P"     "88b 888 "88b d88P"        "88b 888 .88P d8P  Y8b
 888       .d888888 888  888 888      .d888888 888888K  88888888
 888       888  888 888  888 Y88b.    888  888 888 "88b Y8b.
-888       "Y888888 888  888  "Y8888P "Y888888 888  888  "Y88*/
-
-
+888       "Y888888 888  888  "Y8888P "Y888888 888  888  "Y88
+  #
+  #
+  # A PDO-based MySQL Abstraction class.
+  # Inspired by the simplicity of EzSQL & Wordpress' WPDB.
+  #
+  # ------------------------------------------------------------
+  #
+  # A note for developers :
+  #
+  #   Functions described in details in the documentation
+  #   are commented with the strict minimum.
+  #   For complete doc, see https://github.com/tomzmtl/Pancake.
+  #
+  # ------------------------------------------------------------*/
 
 /**
-  * A PDO-based MySQL Abstraction class.
-  * Inspired by the simplicity of EzSQL & Wordpress' WPDB.
-  *
-  * ------------------------------------------------------------
-  *
-  * A note for developers :
-  *
-  *   Functions described in details in the documentation
-  *   are commented with the strict minimum.
-  *   For complete doc, see https://github.com/tomzmtl/Pancake.
-  *
-  * ------------------------------------------------------------
-  *
   * @author Thomas Andreo
-  * @version 1.0.0
+  * @version 1.0.1
   *
 */
-
-
 Class Pancake
 {
   private $db_name = NULL;
@@ -478,24 +475,21 @@ Class Pancake
 888d88888b888 888 "88b d8P  Y8b 888P"  d8P  Y8b
 88888P Y88888 888  888 88888888 888    88888888
 8888P   Y8888 888  888 Y8b.     888    Y8b.
-888P     Y888 888  888  "Y8888  888     "Y88*/
-
-
-
+888P     Y888 888  888  "Y8888  888     "Y88
+  #
+  #
+  # Specific helper class for Pancake to help build conditional
+  # queries easily.
+  #
+  # See examples/Where.php to get started using it.
+  #
+  # ------------------------------------------------------------*/
 
 /**
-  * Specific helper class for Pancake to help build conditional
-  * queries easily.
-  *
-  * See examples/Where.php to get started using it.
-  *
-  * ------------------------------------------------------------
-  *
   * @author Thomas Andreo
   * @version 1.0
   *
 */
-
 Class Where
 {
   // Default logic elements
