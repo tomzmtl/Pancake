@@ -23,13 +23,10 @@ To start using Pancake, simply instantiate the class.
 You'll have to provide your database credentials.
 
 ```php
-<?php
 
-  require_once('lib/Pancake.class.php');
+require_once('lib/Pancake.class.php');
 
-  $pancake = new Pancake( DB_NAME, DB_USER, DB_PASS, DB_HOST );
-
-?>
+$pancake = new Pancake( DB_NAME, DB_USER, DB_PASS, DB_HOST );
 ```
 
 

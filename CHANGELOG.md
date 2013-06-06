@@ -1,11 +1,14 @@
 ## Pancake change log & roadmap
 
-###### version `1.1.0`
+##### Planned features and improvements
 
   * Add get() method for multiple-rows data.
   * Add getColumn() method to get a single column as an array.
+  * Use query() in getColumnType() method.
 
 ----
+
+#### Change log
 
 ###### version `1.0.1` `CURRENT`
 
@@ -43,7 +46,7 @@
 
 ###### version `0.6.1`
 
-Following bug fixed :
+Bugfixes :
 
   * delete() method not returning affected rows.
   * all methods using Where objects failing at execution.

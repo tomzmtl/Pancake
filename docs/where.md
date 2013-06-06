@@ -6,16 +6,13 @@ Those will always use `=` comparison operator and `AND` logical bind with other 
 Example :
 
 ```php
-<?php
 
-  $where = array(
-    'age'     => 20,
-    'country' => "Canada"
-  );
+$where = array(
+  'age'     => 20,
+  'country' => "Canada"
+);
 
-  $pancake->delete( "users", $where );
-
-?>
+$pancake->delete( "users", $where );
 ```
 
 This will translate by the following SQL statement :
@@ -44,24 +41,21 @@ If void or incorrect values are provided for `compare` and/or `logic`, default v
 ### Examples
 
 ```php
-<?php
 
-  $args = array(
-    array(
-      'key'     => "age",
-      'value'   => 20,
-      'compare' => ">="
-    ),
-    array(
-      'key'   => "country",
-      'value' => "Canada",
-      'logic' => "OR"
-    )
-  );
+$args = array(
+  array(
+    'key'     => "age",
+    'value'   => 20,
+    'compare' => ">="
+  ),
+  array(
+    'key'   => "country",
+    'value' => "Canada",
+    'logic' => "OR"
+  )
+);
 
-  $results = $pancake->getRow( "users", new Where($args) );
-
-?>
+$results = $pancake->getRow( "users", new Where($args) );
 ```
 
 This will translate by the following SQL statement :

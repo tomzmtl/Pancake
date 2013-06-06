@@ -28,20 +28,17 @@ Pancake::insert( $table, $data );
 Provide an array with key/value pairs matching your table's column names.
 
 ```php
-<?php
 
-  // prepare your data
-  $data = array(
-    'first_name' => "Brendan",
-    'last_name'  => "Gallagher",
-    'age'        => 20,
-    'country'    => "Canada"
-  );
+// prepare your data
+$data = array(
+  'first_name' => "Brendan",
+  'last_name'  => "Gallagher",
+  'age'        => 20,
+  'country'    => "Canada"
+);
 
-  // execute insertion on the users table
-  $pancake->insert( "users", $data );
-
-?>
+// execute insertion on the users table
+$pancake->insert( "users", $data );
 ```
 
 
@@ -68,17 +65,14 @@ Pancake::delete( $table, $where );
 ##### Usage
 
 ```php
-<?php
 
-  // delete the row with the ID 34
+// delete the row with the ID 34
 
-  $where = array(
-    'id' => 34
-  );
+$where = array(
+  'id' => 34
+);
 
-  $pancake->delete( "users", $where );
-
-?>
+$pancake->delete( "users", $where );
 ```
 
 
@@ -106,15 +100,12 @@ Pancake::getRow( $table, $where );
 ##### Usage
 
 ```php
-<?php
 
-  $where = array(
-    'id' => 48
-  );
+$where = array(
+  'id' => 48
+);
 
-  $results = $pancake->getRow( "users", $where );
-
-?>
+$results = $pancake->getRow( "users", $where );
 ```
 
 ##### Additional notes
